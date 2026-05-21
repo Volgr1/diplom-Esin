@@ -53,6 +53,8 @@
   font-weight: 600;
   transition: background-color 0.15s;
   width: fit-content;
+  border: none;
+  cursor: pointer;
 }
 
 .btn-create:hover {
@@ -136,6 +138,8 @@
   border-radius: 6px;
   font-size: 14px;
   font-weight: 600;
+  border: none;
+  cursor: pointer;
   transition: background-color 0.15s;
   white-space: nowrap;
 }
@@ -148,6 +152,8 @@
   color: #818C99;
   font-size: 15px;
 }
+
+/* Колесо фортуны */
 .wheel-overlay {
   position: fixed;
   top: 0;
@@ -166,85 +172,126 @@
   border-radius: 12px;
   padding: 30px;
   text-align: center;
-  max-width: 500px;
+  max-width: 600px;
   width: 90%;
 }
 
 .wheel-container h2 {
   margin-bottom: 20px;
   color: #2C2D2E;
+  font-size: 22px;
 }
 
-.wheel {
-  width: 250px;
-  height: 250px;
-  margin: 0 auto 20px;
-  position: relative;
-}
-
-.wheel-spinner {
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  border: 3px solid #4A7BFF;
+.wheel-wrapper {
   position: relative;
   overflow: hidden;
-  transition: transform 3s cubic-bezier(0.17, 0.67, 0.12, 0.99);
+  border: 3px solid #4A7BFF;
+  border-radius: 12px;
+  background: #F5F7FA;
+  padding: 20px 0;
+  margin-bottom: 20px;
 }
 
-.wheel-spinner.spinning {
-  animation: spin 3s cubic-bezier(0.17, 0.67, 0.12, 0.99);
+.wheel-arrow {
+  color: #E53935;
+  font-size: 30px;
+  text-align: center;
+  margin-bottom: 10px;
+  animation: bounce 0.5s infinite alternate;
 }
 
-@keyframes spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(1800deg); }
+@keyframes bounce {
+  from { transform: translateY(0); }
+  to { transform: translateY(5px); }
 }
 
-.wheel-pointer {
-  position: absolute;
-  top: -15px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 0;
-  height: 0;
-  border-left: 12px solid transparent;
-  border-right: 12px solid transparent;
-  border-bottom: 20px solid #E53935;
-  z-index: 10;
-}
-
-.wheel-segment {
-  position: absolute;
-  width: 100%;
-  height: 100%;
+.wheel-track {
   display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 600;
-  color: white;
-  font-size: 12px;
+  gap: 16px;
+  transition: transform 5s cubic-bezier(0.17, 0.67, 0.12, 0.99);
 }
 
-.wheel-name {
-  transform: rotate(90deg);
+.wheel-track.spinning {
+  animation: scroll 5s cubic-bezier(0.17, 0.67, 0.12, 0.99);
+}
+
+@keyframes scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-2000px); }
+}
+
+.wheel-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  min-width: 100px;
+  padding: 12px;
+  background: white;
+  border-radius: 8px;
+  border: 2px solid transparent;
+  transition: all 0.3s;
+}
+
+.wheel-winner-item {
+  border-color: #FFD54F;
+  background: #FFF9E6;
+  transform: scale(1.1);
+  box-shadow: 0 0 20px rgba(255, 213, 79, 0.5);
+}
+
+.wheel-item-avatar {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.wheel-item-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: #2C2D2E;
   white-space: nowrap;
 }
 
-.wheel-winner {
+.wheel-result {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin: 16px 0;
+  padding: 16px;
+  background: #FFF9E6;
+  border-radius: 12px;
+  border: 2px solid #FFD54F;
+}
+
+.wheel-result-avatar {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.wheel-result-label {
+  font-size: 14px;
+  color: #F59E0B;
+  font-weight: 600;
+}
+
+.wheel-result-name {
   font-size: 22px;
   font-weight: 700;
-  color: #4CAF50;
-  margin: 16px 0;
+  color: #2C2D2E;
 }
 
 .btn-close-wheel {
   background: #4A7BFF;
   color: white;
-  padding: 10px 30px;
-  border-radius: 6px;
+  padding: 12px 40px;
+  border-radius: 8px;
   border: none;
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 600;
   cursor: pointer;
   margin-top: 10px;
