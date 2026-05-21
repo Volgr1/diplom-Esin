@@ -1,28 +1,22 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
-import * as VKID from '@vkid/sdk'; // Импортируем библиотеку VK ID
 import './Header.css';
 
-function Header({ vkUser, onLogin }) {
-  
-  // Получи свой APP_ID из кабинета VK ID
-  const VK_APP_ID = 12345678; // ЗАМЕНИ НА СВОЙ ID ПРИЛОЖЕНИЯ!
+const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
 
-  useEffect(() => {
-    // Инициализируем VK ID один раз при загрузке компонента
-    VKID.Config.init({
-      app: VK_APP_ID,
-      redirectUrl: 'http://localhost:3000/',
-      state: 'random_state_string_123', // Просто случайная строка
-    });
-
-    // Находим контейнер для кнопки в вёрстке
-    const container = document.getElementById('VkIdSdkOneTap');
-    if (container) {
-      const oneTap = new VKID.OneTap(); // Создаем "шторку" для быстрого входа
-      oneTap.render({ container }); // Показываем её внутри контейнера
-    }
-  }, []);
+function Header({ vkUser, onLogout }) {
+  const handleVKLogin = () => {
+    const authUrl = `${API_URL.replace('/api', '')}/api/auth/vk`;
+    const width = 600;
+    const height = 500;
+    const left = window.screen.width / 2 - width / 2;
+    const top = window.screen.height / 2 - height / 2;
+    window.open(
+      authUrl,
+      'vk_auth',
+      `width=${width},height=${height},left=${left},top=${top}`
+    );
+  };
 
   return (
     <header className="header">
@@ -39,10 +33,12 @@ function Header({ vkUser, onLogin }) {
             <div className="user-info">
               <img src={vkUser.photo} alt="" className="user-avatar" />
               <span className="user-name">{vkUser.first_name}</span>
+              <button className="btn-logout" onClick={onLogout}>Выйти</button>
             </div>
           ) : (
-            // Этот div станет кнопкой "Войти через VK"
-            <div id="VkIdSdkOneTap"></div>
+            <button className="btn-login" onClick={handleVKLogin}>
+              Войти через VK
+            </button>
           )}
         </div>
       </div>
