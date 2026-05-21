@@ -13,7 +13,7 @@ function ProfilePage({ vkUser }) {
     if (vkUser) {
       fetchStats();
     }
-  }, [vkUser]);
+  }, [vkUser]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const fetchStats = async () => {
     try {
