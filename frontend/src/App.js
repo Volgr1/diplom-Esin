@@ -5,7 +5,8 @@ import Footer from './components/Footer';
 import HomePage from './pages/HomePage';
 import LotteryDetail from './pages/LotteryDetail';
 import AdminPage from './pages/AdminPage';
-import AuthCallback from './pages/AuthCallback';
+import RulesPage from './pages/RulesPage';
+import WinnersPage from './pages/WinnersPage';
 import './App.css';
 
 function App() {
@@ -35,8 +36,9 @@ function App() {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/lottery/:id" element={<LotteryDetail vkUser={vkUser} />} />
-          <Route path="/admin" element={<AdminPage />} />
-          <Route path="/auth/callback" element={<AuthCallback onLogin={handleLogin} />} />
+          <Route path="/admin" element={<AdminPage vkUser={vkUser} />} />
+          <Route path="/rules" element={<RulesPage />} />
+          <Route path="/winners" element={<WinnersPage />} />
         </Routes>
       </main>
       <Footer />

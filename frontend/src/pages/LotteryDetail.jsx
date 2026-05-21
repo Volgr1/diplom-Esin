@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import './LotteryDetail.css';
 
-const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
+const API_URL = 'https://diplom-esin.onrender.com/api';
 
 function LotteryDetail({ vkUser }) {
   const { id } = useParams();
@@ -15,7 +15,7 @@ function LotteryDetail({ vkUser }) {
   useEffect(() => {
     fetchLottery();
     fetchParticipants();
-}, [id]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [id]);
 
   const fetchLottery = async () => {
     try {

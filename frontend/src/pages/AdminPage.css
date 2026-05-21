@@ -148,3 +148,108 @@
   color: #818C99;
   font-size: 15px;
 }
+.wheel-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.wheel-container {
+  background: white;
+  border-radius: 12px;
+  padding: 30px;
+  text-align: center;
+  max-width: 500px;
+  width: 90%;
+}
+
+.wheel-container h2 {
+  margin-bottom: 20px;
+  color: #2C2D2E;
+}
+
+.wheel {
+  width: 250px;
+  height: 250px;
+  margin: 0 auto 20px;
+  position: relative;
+}
+
+.wheel-spinner {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  border: 3px solid #4A7BFF;
+  position: relative;
+  overflow: hidden;
+  transition: transform 3s cubic-bezier(0.17, 0.67, 0.12, 0.99);
+}
+
+.wheel-spinner.spinning {
+  animation: spin 3s cubic-bezier(0.17, 0.67, 0.12, 0.99);
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(1800deg); }
+}
+
+.wheel-pointer {
+  position: absolute;
+  top: -15px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 12px solid transparent;
+  border-right: 12px solid transparent;
+  border-bottom: 20px solid #E53935;
+  z-index: 10;
+}
+
+.wheel-segment {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  color: white;
+  font-size: 12px;
+}
+
+.wheel-name {
+  transform: rotate(90deg);
+  white-space: nowrap;
+}
+
+.wheel-winner {
+  font-size: 22px;
+  font-weight: 700;
+  color: #4CAF50;
+  margin: 16px 0;
+}
+
+.btn-close-wheel {
+  background: #4A7BFF;
+  color: white;
+  padding: 10px 30px;
+  border-radius: 6px;
+  border: none;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.btn-close-wheel:hover {
+  background: #3A6BE0;
+}

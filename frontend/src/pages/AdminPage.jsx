@@ -1,19 +1,26 @@
 import React, { useState, useEffect } from 'react';
 import './AdminPage.css';
 
-const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
+const API_URL = 'https://diplom-esin.onrender.com/api';
+const ADMIN_IDS = ['232665125', '344405498'];
 
-function AdminPage() {
+function AdminPage({ vkUser }) {
   const [lotteries, setLotteries] = useState([]);
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [prize, setPrize] = useState('');
   const [endDate, setEndDate] = useState('');
   const [message, setMessage] = useState('');
+  const [showWheel, setShowWheel] = useState(false);
+  const [winnerData, setWinnerData] = useState(null);
+  const [spinning, setSpinning] = useState(false);
+  const [wheelParticipants, setWheelParticipants] = useState([]);
 
   useEffect(() => {
     fetchLotteries();
   }, []);
+
+  const isAdmin = vkUser && ADMIN_IDS.includes(String(vkUser.id));
 
   const fetchLotteries = async () => {
     try {
@@ -52,22 +59,36 @@ function AdminPage() {
     }
   };
 
-  const handleSelectWinner = async (id) => {
-    setMessage('');
-
+  const handleSelectWinner = async (lotteryId) => {
     try {
-      const res = await fetch(`${API_URL}/lotteries/${id}/select-winner`, {
-        method: 'POST'
-      });
-
+      const res = await fetch(`${API_URL}/participants/lottery/${lotteryId}`);
       const data = await res.json();
 
-      if (res.ok) {
-        setMessage(`🎉 Победитель выбран! ID: ${data.winner.vk_user_id}`);
-        fetchLotteries();
-      } else {
-        setMessage(`❌ ${data.error}`);
+      if (data.length === 0) {
+        setMessage('❌ Нет участников для выбора победителя');
+        return;
       }
+
+      setWheelParticipants(data);
+      setShowWheel(true);
+      setSpinning(true);
+
+      setTimeout(async () => {
+        const winnerRes = await fetch(`${API_URL}/lotteries/${lotteryId}/select-winner`, {
+          method: 'POST'
+        });
+        const winnerData = await winnerRes.json();
+
+        if (winnerRes.ok) {
+          setWinnerData(winnerData.winner);
+          setSpinning(false);
+          fetchLotteries();
+        } else {
+          setMessage(`❌ ${winnerData.error}`);
+          setShowWheel(false);
+          setSpinning(false);
+        }
+      }, 3000);
     } catch (error) {
       setMessage('❌ Ошибка соединения');
     }
@@ -81,6 +102,15 @@ function AdminPage() {
       minute: '2-digit'
     });
   };
+
+  if (!isAdmin) {
+    return (
+      <div className="admin-page">
+        <h1 className="admin-title">Доступ запрещён</h1>
+        <p>Только администраторы могут просматривать эту страницу.</p>
+      </div>
+    );
+  }
 
   return (
     <div className="admin-page">
@@ -157,6 +187,42 @@ function AdminPage() {
           </div>
         )}
       </div>
+
+      {/* Колесо фортуны */}
+      {showWheel && (
+        <div className="wheel-overlay">
+          <div className="wheel-container">
+            <h2>Выбираем победителя...</h2>
+            <div className="wheel">
+              <div className={`wheel-spinner ${spinning ? 'spinning' : ''}`}>
+                <div className="wheel-pointer"></div>
+                {wheelParticipants.map((p, i) => (
+                  <div
+                    key={p.id}
+                    className="wheel-segment"
+                    style={{
+                      transform: `rotate(${(360 / wheelParticipants.length) * i}deg)`,
+                      backgroundColor: `hsl(${(360 / wheelParticipants.length) * i}, 70%, 60%)`
+                    }}
+                  >
+                    <span className="wheel-name">{p.first_name}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+            {winnerData && !spinning && (
+              <div className="wheel-winner">
+                🎉 Победитель: {winnerData.first_name} {winnerData.last_name}!
+              </div>
+            )}
+            {!spinning && (
+              <button onClick={() => setShowWheel(false)} className="btn-close-wheel">
+                Закрыть
+              </button>
+            )}
+          </div>
+        </div>
+      )}
     </div>
   );
 }
