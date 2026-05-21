@@ -16,7 +16,6 @@ function AdminPage({ vkUser }) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [winnerData, setWinnerData] = useState(null);
   const [participants, setParticipants] = useState([]);
-  const [currentLotteryId, setCurrentLotteryId] = useState(null);
 
   useEffect(() => {
     fetchLotteries();
@@ -58,7 +57,6 @@ function AdminPage({ vkUser }) {
 
   const handleSelectWinner = async (lotteryId) => {
     try {
-      // Получаем участников
       const res = await fetch(`${API_URL}/participants/lottery/${lotteryId}`);
       const parts = await res.json();
 
@@ -68,13 +66,11 @@ function AdminPage({ vkUser }) {
       }
 
       setParticipants(parts);
-      setCurrentLotteryId(lotteryId);
       setShowWheel(true);
       setSpinning(true);
       setWinnerData(null);
       setCurrentIndex(0);
 
-      // Анимация перебора
       let count = 0;
       const totalSteps = 20;
       const interval = setInterval(() => {
@@ -84,7 +80,6 @@ function AdminPage({ vkUser }) {
         if (count >= totalSteps) {
           clearInterval(interval);
           
-          // Делаем запрос к серверу за победителем
           fetch(`${API_URL}/lotteries/${lotteryId}/select-winner`, { method: 'POST' })
             .then(r => r.json())
             .then(result => {
@@ -104,12 +99,6 @@ function AdminPage({ vkUser }) {
     } catch (error) {
       setMessage('❌ Ошибка');
     }
-  };
-
-  const formatDate = (dateString) => {
-    return new Date(dateString).toLocaleDateString('ru-RU', {
-      day: 'numeric', month: 'long', hour: '2-digit', minute: '2-digit'
-    });
   };
 
   if (!isAdmin) {
@@ -160,7 +149,6 @@ function AdminPage({ vkUser }) {
         )}
       </div>
 
-      {/* Колесо */}
       {showWheel && (
         <div className="wheel-overlay" onClick={() => !spinning && setShowWheel(false)}>
           <div className="wheel-container" onClick={e => e.stopPropagation()}>
