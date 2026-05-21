@@ -101,6 +101,21 @@ function AdminPage({ vkUser }) {
     }
   };
 
+  const handleDelete = async (id, title) => {
+    if (!window.confirm(`Удалить розыгрыш "${title}"?`)) return;
+    
+    try {
+      const res = await fetch(`${API_URL}/lotteries/${id}`, { method: 'DELETE' });
+      if (res.ok) {
+        setMessage('✅ Розыгрыш удалён');
+        fetchLotteries();
+      }
+    } catch (error) {
+      setMessage('❌ Ошибка');
+    }
+  };
+
+
   if (!isAdmin) {
     return (
       <div className="admin-page">
@@ -125,7 +140,7 @@ function AdminPage({ vkUser }) {
         </form>
       </div>
 
-      {message && <p className="admin-message">{message}</p>}
+            {message && <p className="admin-message">{message}</p>}
 
       <div className="admin-card">
         <h2 className="card-title">Управление</h2>
@@ -140,9 +155,12 @@ function AdminPage({ vkUser }) {
                   <span className="admin-item-prize">{l.prize}</span>
                   <span className={`admin-item-status status-${l.status}`}>{l.status === 'active' ? 'Активен' : 'Завершён'}</span>
                 </div>
-                {l.status === 'active' && (
-                  <button className="btn-winner" onClick={() => handleSelectWinner(l.id)}>Выбрать победителя</button>
-                )}
+                <div className="admin-item-actions">
+                  {l.status === 'active' && (
+                    <button className="btn-winner" onClick={() => handleSelectWinner(l.id)}>🎰 Выбрать победителя</button>
+                  )}
+                  <button className="btn-delete" onClick={() => handleDelete(l.id, l.title)}>🗑️</button>
+                </div>
               </div>
             ))}
           </div>
