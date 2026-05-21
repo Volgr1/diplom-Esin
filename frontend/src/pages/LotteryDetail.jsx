@@ -15,7 +15,7 @@ function LotteryDetail({ vkUser }) {
   useEffect(() => {
     fetchLottery();
     fetchParticipants();
-  }, [id]);
+  }, [id]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const fetchLottery = async () => {
     try {
