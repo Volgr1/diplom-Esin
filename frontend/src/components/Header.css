@@ -1,53 +1,112 @@
 .header {
   background-color: #FFFFFF;
   border-bottom: 1px solid #E5E7EB;
-  padding: 0 16px;
   position: sticky;
   top: 0;
   z-index: 100;
 }
 
 .header-container {
-  max-width: 960px;
+  max-width: 1100px;
   margin: 0 auto;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 56px;
+  height: 60px;
+  padding: 0 20px;
 }
 
 .header-logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
   font-size: 20px;
   font-weight: 700;
   color: #4A7BFF;
   letter-spacing: -0.3px;
 }
 
+.logo-icon {
+  font-size: 24px;
+}
+
+.logo-text {
+  font-size: 20px;
+}
+
+/* Десктопная навигация */
 .header-nav {
   display: flex;
-  gap: 24px;
+  gap: 8px;
+}
+
+.desktop-nav {
+  display: flex;
 }
 
 .nav-link {
-  font-size: 15px;
+  font-size: 14px;
   color: #626D7A;
-  transition: color 0.15s;
+  text-decoration: none;
+  padding: 8px 14px;
+  border-radius: 8px;
   font-weight: 500;
+  transition: all 0.15s;
 }
 
 .nav-link:hover {
-  color: #4A7BFF;
+  background: #F0F2F5;
+  color: #2C2D2E;
 }
 
-.header-user {
+.nav-link.active {
+  background: #EBF0FF;
+  color: #4A7BFF;
+  font-weight: 600;
+}
+
+.header-actions {
   display: flex;
   align-items: center;
 }
 
-.user-info {
+/* Кнопка входа */
+.btn-login {
+  background-color: #4A7BFF;
+  color: #FFFFFF;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.15s;
+}
+
+.btn-login:hover {
+  background-color: #3A6BE0;
+}
+
+/* Меню пользователя */
+.user-menu {
+  position: relative;
+}
+
+.user-trigger {
   display: flex;
   align-items: center;
   gap: 8px;
+  padding: 6px 12px;
+  border-radius: 8px;
+  border: none;
+  background: #F5F7FA;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.user-trigger:hover {
+  background: #EBF0FF;
 }
 
 .user-avatar {
@@ -63,134 +122,132 @@
   color: #2C2D2E;
 }
 
-.btn-login {
-  background-color: #4A7BFF;
-  color: #FFFFFF;
-  padding: 8px 16px;
-  border-radius: 6px;
-  font-size: 14px;
-  font-weight: 600;
-  transition: background-color 0.15s;
-}
-
-.btn-login:hover {
-  background-color: #3A6BE0;
-}
-.btn-logout {
-  background: none;
+.menu-arrow {
+  font-size: 12px;
+  transition: transform 0.2s;
   color: #818C99;
-  font-size: 13px;
-  font-weight: 500;
-  padding: 4px 8px;
-  border-radius: 4px;
-  margin-left: 4px;
 }
 
-.btn-logout:hover {
-  background: #F0F2F5;
-  color: #E53935;
+.menu-arrow.open {
+  transform: rotate(180deg);
 }
-.login-modal {
-  position: fixed;
-  top: 0;
-  left: 0;
+
+/* Дропдаун */
+.dropdown-menu {
+  position: absolute;
+  top: calc(100% + 8px);
   right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.4);
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.12);
+  min-width: 220px;
+  padding: 8px;
+  z-index: 200;
+  animation: slideDown 0.2s ease;
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.dropdown-header {
   display: flex;
   align-items: center;
-  justify-content: center;
-  z-index: 1000;
+  gap: 12px;
+  padding: 10px 12px;
 }
 
-.login-modal-content {
-  background: #FFFFFF;
-  border-radius: 8px;
-  padding: 24px;
-  width: 360px;
-  max-width: 90%;
+.dropdown-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
 }
 
-.login-modal-content h3 {
-  font-size: 18px;
-  font-weight: 700;
-  margin-bottom: 8px;
+.dropdown-name {
+  font-size: 15px;
+  font-weight: 600;
   color: #2C2D2E;
 }
 
-.login-modal-content p {
-  font-size: 14px;
+.dropdown-id {
+  font-size: 12px;
   color: #818C99;
-  margin-bottom: 12px;
 }
 
-.login-input {
-  width: 100%;
-  padding: 10px 14px;
-  border: 1px solid #D3D9E0;
-  border-radius: 6px;
-  font-size: 15px;
-  outline: none;
-  margin-bottom: 12px;
-}
-
-.login-input:focus {
-  border-color: #4A7BFF;
-}
-
-.login-error {
-  color: #E53935;
-  font-size: 13px;
-  margin-bottom: 12px;
-}
-
-.login-buttons {
-  display: flex;
-  gap: 8px;
-}
-
-.btn-login-submit {
-  background: #4A7BFF;
-  color: #FFFFFF;
-  padding: 10px 20px;
-  border-radius: 6px;
-  font-size: 14px;
-  font-weight: 600;
-  border: none;
-  cursor: pointer;
-}
-
-.btn-login-submit:hover {
-  background: #3A6BE0;
-}
-
-.btn-login-submit:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
-.btn-login-cancel {
+.dropdown-divider {
+  height: 1px;
   background: #F0F2F5;
-  color: #626D7A;
-  padding: 10px 20px;
-  border-radius: 6px;
-  font-size: 14px;
-  font-weight: 500;
-  border: none;
-  cursor: pointer;
+  margin: 6px 0;
 }
 
-.btn-login-cancel:hover {
-  background: #E5E7EB;
+.dropdown-item {
+  display: block;
+  padding: 10px 12px;
+  border-radius: 6px;
+  font-size: 14px;
+  color: #2C2D2E;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.1s;
+  border: none;
+  background: none;
+  width: 100%;
+  text-align: left;
 }
+
+.dropdown-item:hover {
+  background: #F5F7FA;
+}
+
+.dropdown-item.logout {
+  color: #E53935;
+}
+
+.dropdown-item.logout:hover {
+  background: #FFEBEE;
+}
+
+/* Мобильная кнопка */
+.mobile-menu-btn {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: #626D7A;
+  padding: 4px 8px;
+}
+
+/* Мобильная навигация */
+.mobile-nav {
+  background: white;
+  border-top: 1px solid #E5E7EB;
+  padding: 8px 20px;
+  display: none;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.mobile-nav-link {
+  padding: 12px 16px;
+  border-radius: 8px;
+  font-size: 15px;
+  color: #2C2D2E;
+  text-decoration: none;
+  transition: background 0.15s;
+}
+
+.mobile-nav-link:hover {
+  background: #F5F7FA;
+}
+
 /* Модальное окно */
 .modal-overlay {
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.5);
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.5);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -199,17 +256,32 @@
 
 .modal-content {
   background: #FFFFFF;
-  border-radius: 8px;
+  border-radius: 12px;
   padding: 28px 24px;
   width: 400px;
   max-width: 90%;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  position: relative;
+}
+
+.modal-close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  color: #818C99;
+  padding: 4px 8px;
+}
+
+.modal-close:hover {
+  color: #2C2D2E;
 }
 
 .modal-title {
   font-size: 20px;
   font-weight: 700;
-  color: #2C2D2E;
   margin-bottom: 8px;
 }
 
@@ -217,14 +289,13 @@
   font-size: 14px;
   color: #818C99;
   margin-bottom: 16px;
-  line-height: 1.4;
 }
 
 .modal-input {
   width: 100%;
   padding: 10px 14px;
   border: 1px solid #D3D9E0;
-  border-radius: 6px;
+  border-radius: 8px;
   font-size: 15px;
   outline: none;
   margin-bottom: 12px;
@@ -251,12 +322,11 @@
   background: #4A7BFF;
   color: #FFFFFF;
   padding: 10px 24px;
-  border-radius: 6px;
+  border-radius: 8px;
   font-size: 14px;
   font-weight: 600;
   border: none;
   cursor: pointer;
-  transition: background 0.15s;
 }
 
 .modal-btn-submit:hover:not(:disabled) {
@@ -272,14 +342,32 @@
   background: #F0F2F5;
   color: #626D7A;
   padding: 10px 24px;
-  border-radius: 6px;
+  border-radius: 8px;
   font-size: 14px;
   font-weight: 500;
   border: none;
   cursor: pointer;
-  transition: background 0.15s;
 }
 
 .modal-btn-cancel:hover {
   background: #E5E7EB;
+}
+
+/* Адаптив */
+@media (max-width: 768px) {
+  .desktop-nav {
+    display: none;
+  }
+  
+  .mobile-menu-btn {
+    display: block;
+  }
+  
+  .mobile-nav {
+    display: flex;
+  }
+  
+  .header-actions .btn-login {
+    display: none;
+  }
 }
