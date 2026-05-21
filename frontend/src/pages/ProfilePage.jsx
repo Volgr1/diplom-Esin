@@ -4,7 +4,7 @@ import './ProfilePage.css';
 
 const API_URL = 'https://diplom-esin.onrender.com/api';
 
-function ProfilePage({ vkUser }) {
+function ProfilePage({ vkUser, onLogout }) {
   const [stats, setStats] = useState({ wins: 0, participations: 0, winRate: 0 });
   const [wonLotteries, setWonLotteries] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -64,6 +64,23 @@ function ProfilePage({ vkUser }) {
       </div>
 
       {/* Статистика */}
+            <div style={{ textAlign: 'right', marginBottom: '16px' }}>
+        <button 
+          onClick={onLogout}
+          style={{
+            background: '#FFEBEE',
+            color: '#E53935',
+            padding: '10px 20px',
+            borderRadius: '8px',
+            border: 'none',
+            fontSize: '14px',
+            fontWeight: '600',
+            cursor: 'pointer'
+          }}
+        >
+          🚪 Выйти из профиля
+        </button>
+      </div>
       <div className="profile-stats">
         <div className="stat-card">
           <span className="stat-icon">🎯</span>

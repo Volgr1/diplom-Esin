@@ -61,11 +61,16 @@ function Header({ vkUser, onLogin, onLogout }) {
 
         <div className="header-actions">
           {vkUser ? (
-            <Link to="/profile" className="user-info-link">
-              <img src={vkUser.photo || 'https://vk.com/images/camera_100.png'} alt="" className="user-avatar" />
-              <span className="user-name">{vkUser.first_name}</span>
-            </Link>
-          ) : (
+  <div className="user-logged-in">
+    <Link to="/profile" className="user-info-link">
+      <img src={vkUser.photo || 'https://vk.com/images/camera_100.png'} alt="" className="user-avatar" />
+      <span className="user-name">{vkUser.first_name}</span>
+    </Link>
+    <button className="btn-logout-desktop" onClick={onLogout} title="Выйти">
+      🚪
+    </button>
+  </div>
+) : (
             <button className="btn-login" onClick={() => setShowLogin(true)}>
               🔑 Войти через VK
             </button>

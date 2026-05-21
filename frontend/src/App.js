@@ -40,7 +40,7 @@ function App() {
           <Route path="/admin" element={<AdminPage vkUser={vkUser} />} />
           <Route path="/rules" element={<RulesPage />} />
           <Route path="/winners" element={<WinnersPage />} />
-          <Route path="/profile" element={<ProfilePage vkUser={vkUser} />} />
+          <Route path="/profile" element={<ProfilePage vkUser={vkUser} onLogout={handleLogout} />} />
         </Routes>
       </main>
       <Footer />
