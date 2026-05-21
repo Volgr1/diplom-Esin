@@ -34,7 +34,7 @@ function App() {
       <Header vkUser={vkUser} onLogin={handleLogin} onLogout={handleLogout} />
       <main className="main-content">
         <Routes>
-          <Route path="/" element={<HomePage />} />
+          <Route path="/" element={<HomePage vkUser={vkUser} />} />
           <Route path="/lottery/:id" element={<LotteryDetail vkUser={vkUser} />} />
           <Route path="/admin" element={<AdminPage vkUser={vkUser} />} />
           <Route path="/rules" element={<RulesPage />} />
