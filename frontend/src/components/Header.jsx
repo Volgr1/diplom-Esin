@@ -2,28 +2,17 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import './Header.css';
 
-const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
-
 function Header({ vkUser, onLogout }) {
   const handleVKLogin = () => {
-    const authUrl = `${API_URL.replace('/api', '')}/api/auth/vk`;
-    const width = 600;
-    const height = 500;
-    const left = window.screen.width / 2 - width / 2;
-    const top = window.screen.height / 2 - height / 2;
-    window.open(
-      authUrl,
-      'vk_auth',
-      `width=${width},height=${height},left=${left},top=${top}`
-    );
+    const API_URL = process.env.REACT_APP_API_URL || 'https://diplom-esin.onrender.com/api';
+    const authUrl = API_URL.replace('/api', '/api/auth/vk');
+    window.open(authUrl, 'vk_auth', 'width=600,height=500');
   };
 
   return (
     <header className="header">
       <div className="header-container">
-        <Link to="/" className="header-logo">
-          🎁 Розыгрыши
-        </Link>
+        <Link to="/" className="header-logo">🎁 Розыгрыши</Link>
         <nav className="header-nav">
           <Link to="/" className="nav-link">Главная</Link>
           <Link to="/admin" className="nav-link">Админка</Link>
@@ -36,9 +25,7 @@ function Header({ vkUser, onLogout }) {
               <button className="btn-logout" onClick={onLogout}>Выйти</button>
             </div>
           ) : (
-            <button className="btn-login" onClick={handleVKLogin}>
-              Войти через VK
-            </button>
+            <button className="btn-login" onClick={handleVKLogin}>Войти через VK</button>
           )}
         </div>
       </div>
