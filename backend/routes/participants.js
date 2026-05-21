@@ -60,4 +60,25 @@ router.post('/join', async (req, res) => {
   }
 });
 
+
+// Получить победителя по vk_user_id
+router.get('/winner/:vkUserId', async (req, res) => {
+  try {
+    const { vkUserId } = req.params;
+    const result = await pool.query(
+      'SELECT * FROM participants WHERE vk_user_id = $1 LIMIT 1',
+      [vkUserId]
+    );
+    
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: 'Не найден' });
+    }
+    
+    res.json(result.rows[0]);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+
 module.exports = router;

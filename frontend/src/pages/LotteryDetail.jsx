@@ -9,21 +9,33 @@ function WinnerInfo({ winnerId }) {
 
   useEffect(() => {
     if (winnerId) {
-      fetch(`https://api.vk.com/method/users.get?user_ids=${winnerId}&fields=photo_100&access_token=vk1.a.AssRIH3FjW6HOPGSbQYJkHNU40_rTfh0cMEqIu63bH99rDdHqqBU1a_Utsa77oOK-wEKI0WgdeLYZm3GoPBtXKd4-UqJxwy4Ir7RTxiHtEcu2QnzNdchCzeASXrspJn7MRhOScX8b-Ee4nIRNyqi1OvwlUxbphur_nkON7my-O9vWSdxJZV1dmSSDJNem7qptryBwfO1i1V7PwoegXQ1ug&v=5.199`)
+      // Ищем победителя среди участников (они уже загружены с сервера)
+      fetch(`${API_URL}/participants/winner/${winnerId}`)
         .then(r => r.json())
         .then(data => {
-          if (data.response) setWinner(data.response[0]);
+          if (data && data.first_name) {
+            setWinner(data);
+          }
         })
         .catch(() => {});
     }
   }, [winnerId]);
 
-  if (!winner) return <span>🎉 Победитель: ID {winnerId}</span>;
+  if (!winner) {
+    return <span>🎉 Победитель</span>;
+  }
 
   return (
     <div className="winner-info">
-      <img src={winner.photo_100} alt="" className="winner-avatar" />
-      <span className="winner-name">{winner.first_name} {winner.last_name}</span>
+      <img 
+        src={winner.photo || 'https://vk.com/images/camera_100.png'} 
+        alt="" 
+        className="winner-avatar" 
+      />
+      <div>
+        <div className="winner-label">🎉 Победитель</div>
+        <span className="winner-name">{winner.first_name} {winner.last_name}</span>
+      </div>
     </div>
   );
 }

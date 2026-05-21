@@ -21,13 +21,11 @@ function Footer() {
           </div>
           <div className="footer-col">
             <h4>Мы в соцсетях</h4>
-            <a href="https://vk.com/volgr" target="_blank" rel="noopener noreferrer">ВКонтакте</a>
-            <a href="https://t.me/" target="_blank" rel="noopener noreferrer">Telegram</a>
+            <a href="https://vk.ru/club238936337" target="_blank" rel="noopener noreferrer">ВКонтакте</a>
           </div>
         </div>
         <div className="footer-bottom">
           <p>© 2026 Сервис онлайн-розыгрышей. Все права защищены.</p>
-          <p>Дипломный проект</p>
         </div>
       </div>
     </footer>
